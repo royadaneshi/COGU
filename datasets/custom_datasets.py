@@ -134,10 +134,10 @@ class chest(Dataset):
         self.train = train
 
         if train:
-            self.image_files = glob(os.path.join('/kaggle/input/chest-datasett256/chest_dataset/train', '*.png'))
+            self.image_files = glob(os.path.join('/kaggle/input/chest-dataset-new-upload/chest_dataset/train', '*.png'))
 
         else:
-            self.image_files = glob(os.path.join('/kaggle/input/chest-datasett256/chest_dataset/test', '*.png'))
+            self.image_files = glob(os.path.join('/kaggle/input/chest-dataset-new-upload/chest_dataset/test', '*.png'))
 
         if count != -1:
             if count < len(self.image_files):
