@@ -128,7 +128,7 @@ class MVTecDataset(Dataset):
 
 ###########################################################################################3 added
 class chest(Dataset):
-    def __init__(self, root, transform=None, train=True, count=-1):
+    def __init__(self,  transform=None, train=True, count=-1):
         self.transform = transform
         self.image_files = []
         self.train = train
