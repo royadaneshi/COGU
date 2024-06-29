@@ -33,7 +33,7 @@ MNIST_SUPERCLASS = list(range(10))
 SVHN_SUPERCLASS = list(range(10))
 FashionMNIST_SUPERCLASS = list(range(10))
 MVTecAD_SUPERCLASS = list(range(2))
-chest_SUPERCLASS = list(range(2))
+CHEST_SUPERCLASS = list(range(2))
 HEAD_CT_SUPERCLASS = list(range(2))
 ART_BENCH_SUPERCLASS = list(range(10))
 MVTEC_HV_SUPERCLASS = list(range(2))
@@ -693,7 +693,19 @@ def get_dataset(P, dataset, test_only=False, image_size=(32, 32, 3), download=Fa
         test_set = torch.utils.data.ConcatDataset([anomaly_testset, normal_testset])
         print("train_set shapes: ", train_set[0][0].shape)
         print("test_set shapes: ", test_set[0][0].shape)
+    elif dataset == 'chest':
+        print("hereeeeeeeeeeee chest get dataset")
+        n_classes = 2
+        transform = transforms.Compose([
+            transforms.Resize((256, 256)),
+            transforms.ToTensor()
+        ])
 
+        train_set = chest(transform=transform, train=True, count=128)
+        test_set = chest(transform=transform, train=False, count=128)
+        print("train_set shapes: ", train_set[0][0].shape)
+        print("test_set shapes: ", test_set[0][0].shape)
+        print("len(test_dataset), len(train_dataset)", len(test_set), len(train_set))
     elif dataset == 'head-ct':
         n_classes = 2
         train_transform = transforms.Compose([
@@ -1536,7 +1548,7 @@ def get_superclass_list(dataset):
     elif dataset == 'MVTecAD':
         return MVTecAD_SUPERCLASS
     elif dataset == 'chest':
-        return chest_SUPERCLASS
+        return CHEST_SUPERCLASS
     elif dataset == 'ArtBench':
         return ART_BENCH_SUPERCLASS
     elif dataset == 'cub-birds' or dataset == 'head-ct' or dataset == 'cifar100-versus-other-eval' or dataset == 'cifar10-versus-other-eval':
