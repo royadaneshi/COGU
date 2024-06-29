@@ -72,7 +72,6 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         shift_labels = shift_labels.repeat(2)
         ###
         shift_labels = shift_labels[:batch_size]
-
         ##
         images_pair = torch.cat([images1, images2], dim=0)  # 8B
         images_pair = simclr_aug(images_pair)  # transform
