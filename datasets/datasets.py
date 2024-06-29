@@ -226,8 +226,8 @@ def get_exposure_dataloader(P, batch_size=64, image_size=(224, 224, 3),
             transforms.ToTensor(),
         ])
         imagenet_exposure = ImageNetExposure(root=base_path, count=tiny_count, transform=tiny_transform)
-        test_set = chest(transform=transform, train=True, count=128)
-        train_set = chest(transform=transform, train=False, count=128)
+        test_set = chest(transform=transform, train=True)
+        train_set = chest(transform=transform, train=False)
 
         print("train_set shapes: ", train_set[0][0].shape)
         print("test_set shapes: ", test_set[0][0].shape)
