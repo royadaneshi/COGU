@@ -144,6 +144,8 @@ class chest(Dataset):
                 self.image_files = self.image_files[:count]
             else:
                 t = len(self.image_files)
+                print("count-t",count-t)
+                print("length of images:",len(self.image_files))
                 for i in range(count - t):
                     self.image_files.append(random.choice(self.image_files[:t]))
         self.image_files.sort(key=lambda y: y.lower())
