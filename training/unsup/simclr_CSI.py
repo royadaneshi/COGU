@@ -12,7 +12,6 @@ hflip = TL.HorizontalFlipLayer().to(device)
 
 def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposure_loader=None, logger=None,
           simclr_aug=None, linear=None, linear_optim=None):
-
     assert simclr_aug is not None
     assert P.sim_lambda == 1.0  # to avoid mistake
     P.K_shift = 2
@@ -60,14 +59,15 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
             exposure_images1, exposure_images2 = hflip(exposure_images.repeat(2, 1, 1, 1)).chunk(2)  # hflip
         else:
             batch_size = images[0].size(0)
+            print("batch size: ", batch_size)
             images1, images2 = images[0].to(device), images[1].to(device)
         labels = labels.to(device)
-        
+
         images1 = torch.cat([images1, exposure_images1])
         images2 = torch.cat([images2, exposure_images2])
-        #images1 = torch.cat([P.shift_trans(images1, k) for k in range(P.K_shift)])
-        #images2 = torch.cat([P.shift_trans(images2, k) for k in range(P.K_shift)])
-        #shift_labels = torch.cat([torch.ones_like(labels) * k for k in range(P.K_shift)], 0)  # B -> 4B
+        # images1 = torch.cat([P.shift_trans(images1, k) for k in range(P.K_shift)])
+        # images2 = torch.cat([P.shift_trans(images2, k) for k in range(P.K_shift)])
+        # shift_labels = torch.cat([torch.ones_like(labels) * k for k in range(P.K_shift)], 0)  # B -> 4B
         shift_labels = torch.cat([torch.ones_like(labels), torch.zeros_like(labels)], 0)  # B -> 4B
         shift_labels = shift_labels.repeat(2)
 
@@ -116,4 +116,3 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         logger.scalar_summary('train/loss_sim', losses['sim'].average, epoch)
         logger.scalar_summary('train/loss_shift', losses['shift'].average, epoch)
         logger.scalar_summary('train/batch_time', batch_time.average, epoch)
-
