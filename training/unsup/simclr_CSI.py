@@ -88,6 +88,16 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         loss_sim = NT_xent(sim_matrix, temperature=0.5) * P.sim_lambda
 
         ################
+        outputs_shift = outputs_aux['shift']
+
+        # Getting the batch size
+        batch_size_outputs_shift = outputs_shift.size(0)
+        batch_size_shift_labels = shift_labels.size(0)
+
+        print(f"Batch size of outputs_aux['shift']RRRR: {batch_size_outputs_shift}")
+        print(f"Batch size of shift_labelsRRR: {batch_size_shift_labels}")
+
+
         shift_labels = shift_labels[:outputs_aux['shift'].size(0)]
         ##################
         loss_shift = criterion(outputs_aux['shift'], shift_labels)
