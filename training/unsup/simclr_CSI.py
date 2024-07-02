@@ -96,8 +96,8 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         outputs_shift_flat = outputs_shift_flat[:min_size]
         shift_labels_flat = shift_labels_flat[:min_size]
 
-        print(f"Flattened outputs_shift size: {outputs_shift_flat.size()}")
-        print(f"Flattened shift_labels size: {shift_labels_flat.size()}")
+        print(f"Flattened outputs_shift sizeRRRRRRRRr: {outputs_shift_flat.size()}")
+        print(f"Flattened shift_labels sizeRRRRRRRRRr: {shift_labels_flat.size()}")
         loss_shift = criterion(outputs_shift_flat, shift_labels_flat)
 
         ##################
