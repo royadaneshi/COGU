@@ -89,7 +89,7 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
 
         ########################################333
         outputs_shift_flat = outputs_aux['shift'].view(-1).float()
-        shift_labels_flat = shift_labels.view(-1).long()
+        shift_labels_flat = shift_labels.view(-1).float()
 
 
         # Ensure they have the same batch size
