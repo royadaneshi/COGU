@@ -217,8 +217,8 @@ def _get_features(P, model, loader, interp=False, imagenet=False, simclr_aug=Non
             feats_all[layer] += [feats_batch[layer]]
 
     # concatenate features in full dataset
-    print("__________________________________________________________________")
-    print("feats_all:::::::::::::",feats_all)
+    print("__________________________________________________________________",len(feats_all))
+    print("layers:::::::::::::",len(layers))
     for key, val in feats_all.items():
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ",val)
         feats_all[key] = torch.cat(val, dim=0)  # (N, T, d)
