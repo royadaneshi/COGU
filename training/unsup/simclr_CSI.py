@@ -93,8 +93,8 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
 
         # Ensure they have the same batch size
         min_size = min(outputs_shift_flat.size(0), shift_labels_flat.size(0))
-        if min_size >= 4:
-            min_size = 4
+        if min_size >= 1:
+            min_size = 1
 
         outputs_shift_flat = outputs_shift_flat[:min_size]
         shift_labels_flat = shift_labels_flat[:min_size]
