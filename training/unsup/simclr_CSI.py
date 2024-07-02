@@ -87,20 +87,21 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         sim_matrix = get_similarity_matrix(simclr, multi_gpu=P.multi_gpu)
         loss_sim = NT_xent(sim_matrix, temperature=0.5) * P.sim_lambda
 
-        ################
-        outputs_shift = outputs_aux['shift']
+        ########################################333
+        outputs_shift_flat = outputs_aux['shift'].view(-1)
+        shift_labels_flat = shift_labels.view(-1)
 
-        # Getting the batch size
-        batch_size_outputs_shift = outputs_shift.size(0)
-        batch_size_shift_labels = shift_labels.size(0)
+        # Ensure they have the same batch size
+        min_size = min(outputs_shift_flat.size(0), shift_labels_flat.size(0))
+        outputs_shift_flat = outputs_shift_flat[:min_size]
+        shift_labels_flat = shift_labels_flat[:min_size]
 
-        print(f"Batch size of outputs_aux['shift']RRRR: {batch_size_outputs_shift}")
-        print(f"Batch size of shift_labelsRRR: {batch_size_shift_labels}")
+        print(f"Flattened outputs_shift size: {outputs_shift_flat.size()}")
+        print(f"Flattened shift_labels size: {shift_labels_flat.size()}")
+        loss_shift = criterion(outputs_shift_flat, shift_labels_flat)
 
-
-        shift_labels = shift_labels[:outputs_aux['shift'].size(0)]
         ##################
-        loss_shift = criterion(outputs_aux['shift'], shift_labels)
+        # loss_shift = criterion(outputs_aux['shift'], shift_labels)
 
         ### total loss ###
         loss = loss_sim + loss_shift
