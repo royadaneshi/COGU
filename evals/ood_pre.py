@@ -219,6 +219,7 @@ def _get_features(P, model, loader, interp=False, imagenet=False, simclr_aug=Non
     # concatenate features in full dataset
     print("feats_all:::::::::::::",feats_all)
     for key, val in feats_all.items():
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ",val)
         feats_all[key] = torch.cat(val, dim=0)  # (N, T, d)
 
     # reshape order
