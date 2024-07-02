@@ -1,4 +1,5 @@
 import os
+import sys
 from copy import deepcopy
 
 import torch
@@ -145,6 +146,7 @@ def get_features(P, data_name, model, loader, interp=False, prefix='',
     left = [layer for layer in layers if layer not in feats_dict.keys()]
     if len(left) > 0:
         print("**************************************************************************************************")
+        sys.stdout.flush()
         _feats_dict = _get_features(P, model, loader, interp, P.dataset == 'imagenet',
                                     simclr_aug, sample_num, layers=left)
 
@@ -219,9 +221,11 @@ def _get_features(P, model, loader, interp=False, imagenet=False, simclr_aug=Non
 
     # concatenate features in full dataset
     print("__________________________________________________________________",len(feats_all))
+    sys.stdout.flush()
     print("layers:::::::::::::",len(layers))
     for key, val in feats_all.items():
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ",val)
+        sys.stdout.flush()
         feats_all[key] = torch.cat(val, dim=0)  # (N, T, d)
 
     # reshape order
