@@ -21,6 +21,7 @@ elif P.mode in ['ood', 'ood_pre']:
         from evals.ood_pre_3 import eval_ood_detection as eval_ood_detection_3
     print(P)
     with torch.no_grad():
+        print("//////////////////////////////////////////////////////")
         auroc_dict = eval_ood_detection(P, model, test_loader, ood_test_loader, P.ood_score,
                                         train_loader=train_loader, simclr_aug=simclr_aug)
 
