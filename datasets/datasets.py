@@ -231,9 +231,11 @@ def get_exposure_dataloader(P, batch_size=64, image_size=(224, 224, 3),
 
         print("train_set shapes: ", train_set[0][0].shape)
         print("test_set shapes: ", test_set[0][0].shape)
-        exposureset = torch.utils.data.ConcatDataset([train_set, imagenet_exposure])
+        # exposureset = torch.utils.data.ConcatDataset([train_set, imagenet_exposure])
+        exposureset = torch.utils.data.ConcatDataset([train_set])
 
         print("number of exposure:", len(exposureset))
+        print(" batch_size:::::::", batch_size)
         train_loader = DataLoader(exposureset, batch_size=batch_size, shuffle=True)
         ####################################################################################3
     elif P.dataset == "mvtec-high-var":
