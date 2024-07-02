@@ -32,10 +32,6 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
 
     check = time.time()
     train_exposure_loader_iterator = iter(train_exposure_loader)
-    #########################
-    if len(train_exposure_loader_iterator) >= len(loader):
-        train_exposure_loader_iterator = train_exposure_loader_iterator[:len(loader) / 2]
-    ###################3
 
     print("len(train_exposure_loader_iterator), len(loader): ", len(train_exposure_loader_iterator), len(loader))
     print("cl_no_hflip=", P.cl_no_hflip)
@@ -57,6 +53,10 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
             batch_size = images.size(0)
             images = images.to(device)
             exposure_images = exposure_images.to(device)
+            #######
+            if exposure_images.size(0) > batch_size:
+                exposure_images = exposure_images[:batch_size]
+            #######3
             if P.cl_no_hflip:
                 images1, images2 = images.repeat(2, 1, 1, 1).chunk(2)  # hflip
             else:
