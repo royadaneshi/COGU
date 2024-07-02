@@ -57,7 +57,7 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
             else:
                 images1, images2 = hflip(images.repeat(2, 1, 1, 1)).chunk(2)  # hflip
             exposure_images1, exposure_images2 = hflip(exposure_images.repeat(2, 1, 1, 1)).chunk(2)  # hflip
-            print("batch sizeeeeeeeeeeeeeeeeeeeeeee: ", batch_size)
+            # print("batch sizeeeeeeeeeeeeeeeeeeeeeee: ", batch_size)
         else:
             batch_size = images[0].size(0)
             images1, images2 = images[0].to(device), images[1].to(device)
@@ -72,12 +72,12 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         # shift_labels = torch.cat([torch.ones_like(labels), torch.zeros_like(labels)], 0)  # B -> 4B
         # shift_labels = shift_labels.repeat(2)
 
-        ##################33
+        ##################
         # batch_size = images1.size(0)  # 2B
         shift_labels = torch.cat([torch.ones(batch_size, dtype=torch.long), torch.zeros(batch_size, dtype=torch.long)],
                                  0)
         shift_labels = shift_labels.repeat(2).to(device)
-##################################
+        ##################################
         images_pair = torch.cat([images1, images2], dim=0)  # 8B
         images_pair = simclr_aug(images_pair)  # transform
 
@@ -87,18 +87,17 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         sim_matrix = get_similarity_matrix(simclr, multi_gpu=P.multi_gpu)
         loss_sim = NT_xent(sim_matrix, temperature=0.5) * P.sim_lambda
 
-        ########################################333
+        ########################################
         outputs_shift_flat = outputs_aux['shift'].view(-1).float()
         shift_labels_flat = shift_labels.view(-1).float()
-
 
         # Ensure they have the same batch size
         min_size = min(outputs_shift_flat.size(0), shift_labels_flat.size(0))
         outputs_shift_flat = outputs_shift_flat[:min_size]
         shift_labels_flat = shift_labels_flat[:min_size]
 
-        print(f"Flattened outputs_shift sizeRRRRRRRRr: {outputs_shift_flat.size()}")
-        print(f"Flattened shift_labels sizeRRRRRRRRRr: {shift_labels_flat.size()}")
+        # print(f"Flattened outputs_shift sizeRRRRRRRRr: {outputs_shift_flat.size()}")
+        # print(f"Flattened shift_labels sizeRRRRRRRRRr: {shift_labels_flat.size()}")
         loss_shift = criterion(outputs_shift_flat, shift_labels_flat)
 
         ##################
