@@ -86,7 +86,7 @@ def eval_ood_detection(P, model, id_loader, ood_loaders, ood_scores, train_loade
     auroc_dict = dict()
     print("in the evallllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
     ##
-    w=2/0
+    # w=2/0
     ##
     for ood in ood_loaders.keys():
         auroc_dict[ood] = dict()
