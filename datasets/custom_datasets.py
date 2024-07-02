@@ -128,7 +128,7 @@ class MVTecDataset(Dataset):
 
 ###########################################################################################3 added
 class chest(Dataset):
-    def __init__(self,  transform=None, train=True, count=-1):
+    def __init__(self, transform=None, train=True, count=-1):
         self.transform = transform
         self.image_files = []
         self.train = train
@@ -144,8 +144,8 @@ class chest(Dataset):
                 self.image_files = self.image_files[:count]
             else:
                 t = len(self.image_files)
-                print("count-t",count-t)
-                print("length of images:",len(self.image_files))
+                # print("count-t", count - t)
+                # print("length of images:", len(self.image_files))
                 for i in range(count - t):
                     self.image_files.append(random.choice(self.image_files[:t]))
         self.image_files.sort(key=lambda y: y.lower())
@@ -167,6 +167,8 @@ class chest(Dataset):
 
     def __len__(self):
         return len(self.image_files)
+
+
 ###########################################################################################3
 class FakeMVTecDataset(Dataset):
     def __init__(self, root, category, transform=None, target_transform=None, train=True, count=-1):
