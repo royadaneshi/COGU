@@ -88,8 +88,9 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
         loss_sim = NT_xent(sim_matrix, temperature=0.5) * P.sim_lambda
 
         ########################################333
-        outputs_shift_flat = outputs_aux['shift'].view(-1)
-        shift_labels_flat = shift_labels.view(-1)
+        outputs_shift_flat = outputs_aux['shift'].view(-1).float()
+        shift_labels_flat = shift_labels.view(-1).long()
+
 
         # Ensure they have the same batch size
         min_size = min(outputs_shift_flat.size(0), shift_labels_flat.size(0))
