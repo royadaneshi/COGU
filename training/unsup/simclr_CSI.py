@@ -53,7 +53,7 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
             batch_size = images.size(0)
             images = images.to(device)
             exposure_images = exposure_images.to(device)
-            ####### decrease batch size
+            ####### decrease exposure size
             if exposure_images.size(0) > batch_size:
                 exposure_images = exposure_images[:batch_size]
             #######3
@@ -98,8 +98,9 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, train_exposu
 
         # Ensure they have the same batch size
         min_size = min(outputs_shift_flat.size(0), shift_labels_flat.size(0))
-        if min_size >= 12:
-            min_size = 12
+        #decrease the batch size
+        if min_size >= 8:
+            min_size = 8
 
         outputs_shift_flat = outputs_shift_flat[:min_size]
         shift_labels_flat = shift_labels_flat[:min_size]
