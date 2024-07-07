@@ -132,30 +132,23 @@ class chest(Dataset):
         self.transform = transform
         self.image_files = []
         self.train = train
-
         if train:
             self.image_files = glob(os.path.join('/kaggle/input/chest-dataset-new-upload/chest_dataset/train', '*.png'))
-
         else:
             self.image_files = glob(os.path.join('/kaggle/input/chest-dataset-new-upload/chest_dataset/test', '*.png'))
-
         if count != -1:
             if count < len(self.image_files):
                 self.image_files = self.image_files[:count]
             else:
                 t = len(self.image_files)
-                # print("count-t", count - t)
-                # print("length of images:", len(self.image_files))
                 for i in range(count - t):
                     self.image_files.append(random.choice(self.image_files[:t]))
         self.image_files.sort(key=lambda y: y.lower())
-
     def __getitem__(self, index):
         image_file = self.image_files[index]
         image = Image.open(image_file)
         image = image.convert('RGB')
         image = image.resize((256, 256))
-
         if self.transform is not None:
             image = self.transform(image)
         target = 0
@@ -164,11 +157,8 @@ class chest(Dataset):
         elif "abnormal" in os.path.dirname(image_file):
             target = 1
         return image, target
-
     def __len__(self):
         return len(self.image_files)
-
-
 ###########################################################################################3
 class FakeMVTecDataset(Dataset):
     def __init__(self, root, category, transform=None, target_transform=None, train=True, count=-1):

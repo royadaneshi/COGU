@@ -220,7 +220,6 @@ def get_exposure_dataloader(P, batch_size=64, image_size=(224, 224, 3),
         train_loader = DataLoader(exposureset, batch_size=batch_size, shuffle=True)
         ###############################################################added
     elif P.dataset == "chest":
-        print("hereeeeeeeeeeee chest")
         transform = transforms.Compose([
             transforms.Resize((256, 256)),
             transforms.ToTensor(),
